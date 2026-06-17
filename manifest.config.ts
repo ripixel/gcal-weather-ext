@@ -7,10 +7,18 @@ export default defineManifest({
   description:
     'Shows weather in Google Calendar day, week, and schedule views, plus weather for events away from your default location.',
   version: pkg.version,
-  // No icons shipped in v0.1 — Chrome uses a default. Add icons/ + manifest
-  // `icons`/`action.default_icon` entries when artwork is ready.
+  icons: {
+    16: 'icons/icon-16.png',
+    48: 'icons/icon-48.png',
+    128: 'icons/icon-128.png',
+  },
   action: {
     default_title: 'Calendar Weather settings',
+    default_icon: {
+      16: 'icons/icon-16.png',
+      48: 'icons/icon-48.png',
+      128: 'icons/icon-128.png',
+    },
   },
   background: {
     service_worker: 'src/background/service-worker.ts',

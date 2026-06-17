@@ -40,6 +40,11 @@ async function init(): Promise<void> {
     locationInput.value = settings.defaultLocation.label;
     locationStatus.textContent = `Saved: ${settings.defaultLocation.label}`;
     locationStatus.className = 'status ok';
+  } else {
+    // First run (e.g. opened automatically on install): nudge the user to set a
+    // location, since nothing renders until one is configured.
+    locationStatus.textContent = 'Set a default location to get started.';
+    locationInput.focus();
   }
 
   const unitsRadio = document.querySelector<HTMLInputElement>(

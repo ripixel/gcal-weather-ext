@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [crx({ manifest })],
   build: {
     target: 'esnext',
-    sourcemap: true,
+    // No source maps in production builds → leaner Web Store package. The dev
+    // server (`npm run dev`) still provides maps for debugging.
+    sourcemap: false,
   },
   server: {
     port: 5173,

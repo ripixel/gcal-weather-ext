@@ -32,7 +32,19 @@ Then in Chrome:
 5. Open [Google Calendar](https://calendar.google.com) and switch to day, week,
    or schedule view.
 
+On first install the options page opens automatically so you can set a default
+location (nothing renders until one is configured).
+
 For live development with HMR: `npm run dev`, then load `dist/` as above.
+
+## Packaging for the Chrome Web Store
+
+```bash
+npm run package   # builds dist/ and writes gcal-weather-<version>.zip
+```
+
+See [STORE.md](STORE.md) for the full submission walkthrough (listing copy,
+required assets, and permission/privacy declarations).
 
 ## How it works
 

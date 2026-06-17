@@ -46,3 +46,11 @@ chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
 chrome.action.onClicked.addListener(() => {
   chrome.runtime.openOptionsPage();
 });
+
+// On first install, open the options page so the user can set a default
+// location straight away (nothing renders until one is configured).
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === 'install') {
+    chrome.runtime.openOptionsPage();
+  }
+});
