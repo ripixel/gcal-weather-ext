@@ -31,6 +31,6 @@ export default defineManifest({
   permissions: ['storage'],
   host_permissions: [
     'https://api.open-meteo.com/*',
-    'https://geocoding-api.open-meteo.com/*',
+    'https://nominatim.openstreetmap.org/*',
   ],
 });

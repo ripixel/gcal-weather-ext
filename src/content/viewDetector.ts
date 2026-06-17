@@ -1,30 +1,39 @@
 export type CalendarView = 'day' | 'week' | 'schedule' | 'month' | 'other';
 
 /**
- * Detects the active calendar view from the URL path. Google Calendar is an SPA,
- * so the path (e.g. /r/day, /r/week, /r/agenda) is the most stable signal.
- *
- * Path samples:
- *   /r              -> week (default)
- *   /r/day          -> day
- *   /r/week         -> week
- *   /r/customweek   -> week-like
- *   /r/month        -> month
- *   /r/agenda       -> schedule
- *   /r/custom...    -> treated per keyword
+ * Detects the active calendar view. Google Calendar is an SPA; the view keyword
+ * follows `/r/` in the path (e.g. /calendar/u/0/r/week/2026/6/15), so we read the
+ * segment right after `/r/`. Bare `/r` defaults to week. DOM checks back it up.
  */
 export function detectView(): CalendarView {
   const path = location.pathname.toLowerCase();
+  const seg = path.match(/\/r\/([a-z]+)/)?.[1];
 
-  if (path.includes('/month')) return 'month';
-  if (path.includes('/agenda') || path.includes('/schedule')) return 'schedule';
-  if (path.includes('/day')) return 'day';
-  if (path.includes('/week') || path === '/calendar/r' || path === '/calendar/r/')
-    return 'week';
-  if (path.includes('/custom')) return 'week';
+  switch (seg) {
+    case 'month':
+      return 'month';
+    case 'year':
+      return 'other';
+    case 'agenda':
+    case 'schedule':
+      return 'schedule';
+    case 'day':
+      return 'day';
+    case 'week':
+    case 'customweek':
+    case 'custom':
+    case 'customday':
+      return 'week';
+  }
 
-  // Fallback: a week/day grid exposes column headers with datekeys.
-  if (document.querySelector('[role="columnheader"][data-datekey]')) return 'week';
+  // Bare `/r` (no segment) is the default week view.
+  if (/\/r\/?$/.test(path)) return 'week';
+
+  // DOM fallbacks when the path is unexpected.
+  if (document.querySelector('[role="rowgroup"][data-datekey]')) return 'schedule';
+  const headers = document.querySelectorAll('[role="columnheader"]');
+  if (headers.length === 1) return 'day';
+  if (headers.length > 1) return 'week';
 
   return 'other';
 }

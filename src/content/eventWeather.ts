@@ -8,8 +8,10 @@ import {
   findEventChips,
   findEventPopover,
   isoDateForPopover,
+  locationQueryCandidates,
   MARKER_ATTR,
 } from './selectors';
+import type { GeocodeResult } from '../lib/types';
 
 const EVENT_KEY = 'event';
 
@@ -74,7 +76,7 @@ async function annotate(
   if (existing?.dataset.gcwSig === sig) return;
 
   try {
-    const geo = await requestGeocode(location);
+    const geo = await geocodeLocation(location);
     if (!geo) return;
     if (sameAsDefault(geo, def)) {
       existing?.remove();
@@ -94,4 +96,13 @@ async function annotate(
   } catch {
     // Network/geocode hiccup — leave the event unannotated, try again later.
   }
+}
+
+/** Geocodes a location, falling back to simpler queries (postcode, town). */
+async function geocodeLocation(location: string): Promise<GeocodeResult | null> {
+  for (const query of locationQueryCandidates(location)) {
+    const result = await requestGeocode(query);
+    if (result) return result;
+  }
+  return null;
 }

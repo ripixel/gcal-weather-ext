@@ -9,8 +9,11 @@ A Chrome extension (Manifest V3) that overlays weather onto Google Calendar:
   read directly from the event chip where the location is shown inline, with the
   event detail popover as a richer secondary source.
 
-Weather data comes from [Open-Meteo](https://open-meteo.com/) — free, no API key,
-including its geocoding API. All processing is client-side; there is no backend.
+Weather data comes from [Open-Meteo](https://open-meteo.com/) (free, no API key);
+geocoding uses [Nominatim / OpenStreetMap](https://nominatim.openstreetmap.org/),
+which resolves place names, full addresses, business/POI names, and postcodes.
+All processing is client-side; there is no backend. Geocode lookups are cached
+and throttled to respect Nominatim's usage policy.
 
 ## Build & install (unpacked)
 
