@@ -61,7 +61,9 @@ views, plus weather for events away from home.
   personal data to the developer. Location text from settings/events is sent only
   to the weather/geocoding APIs above to fetch a forecast. No analytics, no
   tracking. You'll select the corresponding "data not collected" declarations and
-  certify compliance. A short privacy policy URL is required by the dashboard.
+  certify compliance.
+- **Privacy policy URL:** the dashboard requires one. Use the published
+  [PRIVACY.md](PRIVACY.md) — e.g. its GitHub URL, or a GitHub Pages link.
 
 ## Pre-submit checklist
 
@@ -69,4 +71,4 @@ views, plus weather for events away from home.
 - [ ] `version` bumped since the last upload.
 - [ ] Loaded the zip's `dist/` unpacked once and smoke-tested week/day/schedule.
 - [ ] Screenshots captured at a supported size.
-- [ ] Privacy policy URL ready.
+- [ ] Privacy policy URL ready ([PRIVACY.md](PRIVACY.md)).

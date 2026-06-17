@@ -44,7 +44,8 @@ npm run package   # builds dist/ and writes gcal-weather-<version>.zip
 ```
 
 See [STORE.md](STORE.md) for the full submission walkthrough (listing copy,
-required assets, and permission/privacy declarations).
+required assets, and permission/privacy declarations), and [PRIVACY.md](PRIVACY.md)
+for the privacy policy.
 
 ## How it works
 
