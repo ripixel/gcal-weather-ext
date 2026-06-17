@@ -19,22 +19,26 @@ export function renderDayBadges(
   if (!viewEnabled(view, settings)) return;
   if (!settings.defaultLocation) return;
 
-  const headers =
-    view === 'schedule' ? findScheduleHeaders() : findDayHeaders();
+  // Schedule rows stack the badge under the date; grid headers are short and
+  // clip overflow, so the badge is corner-positioned inside the header box.
+  const isSchedule = view === 'schedule';
+  const placement = isSchedule ? 'block' : 'corner';
+  const headers = isSchedule ? findScheduleHeaders() : findDayHeaders();
 
   for (const { el, isoDate } of headers) {
     if (!isWithinHorizon(isoDate)) {
-      renderPlaceholder(el, DAY_KEY);
+      renderPlaceholder(el, DAY_KEY, placement);
       continue;
     }
     const day = forecast?.days[isoDate];
     if (day) {
       renderBadge(el, DAY_KEY, day, settings.units, {
         variant: 'day',
+        placement,
         locationLabel: settings.defaultLocation.label,
       });
     } else {
-      renderPlaceholder(el, DAY_KEY);
+      renderPlaceholder(el, DAY_KEY, placement);
     }
   }
 }

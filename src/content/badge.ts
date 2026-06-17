@@ -17,19 +17,36 @@ function tooltip(day: DayWeather, units: Units, locationLabel?: string): string 
   return parts.filter(Boolean).join(' · ');
 }
 
+export type Placement = 'inline' | 'corner' | 'block';
+
+/** Ensures `parent` is a positioning context for an absolutely-placed badge. */
+function ensurePositioned(parent: HTMLElement): void {
+  if (getComputedStyle(parent).position === 'static') {
+    parent.style.position = 'relative';
+  }
+}
+
 /**
  * Creates or updates a weather badge element. The `key` uniquely identifies the
  * badge's purpose (e.g. a date or event id) so repeated renders update in place
- * rather than duplicating.
+ * rather than duplicating. `placement` controls layout: `corner` (absolute, for
+ * clip-prone grid headers), `block` (stacked), or `inline` (default, in chips).
  */
 export function renderBadge(
   parent: HTMLElement,
   key: string,
   day: DayWeather,
   units: Units,
-  opts: { variant?: 'day' | 'event'; locationLabel?: string } = {},
+  opts: {
+    variant?: 'day' | 'event';
+    placement?: Placement;
+    locationLabel?: string;
+  } = {},
 ): void {
   const variant = opts.variant ?? 'day';
+  const placement = opts.placement ?? 'inline';
+  if (placement === 'corner') ensurePositioned(parent);
+
   let badge = parent.querySelector<HTMLElement>(
     `:scope > [${MARKER_ATTR}="${CSS.escape(key)}"]`,
   );
@@ -42,7 +59,7 @@ export function renderBadge(
   const { icon } = describeWeatherCode(day.weatherCode);
   const text = `${icon} ${day.tempMax}°/${day.tempMin}°`;
   const title = tooltip(day, units, opts.locationLabel);
-  const className = `gcw-badge gcw-badge--${variant}`;
+  const className = `gcw-badge gcw-badge--${variant} gcw-badge--${placement}`;
 
   // Skip writes when nothing changed — otherwise our own DOM updates would
   // retrigger the MutationObserver and loop. This keeps the steady state quiet.
@@ -60,7 +77,12 @@ export function renderBadge(
 }
 
 /** Renders a muted placeholder for dates outside the forecast horizon. */
-export function renderPlaceholder(parent: HTMLElement, key: string): void {
+export function renderPlaceholder(
+  parent: HTMLElement,
+  key: string,
+  placement: Placement = 'inline',
+): void {
+  if (placement === 'corner') ensurePositioned(parent);
   let badge = parent.querySelector<HTMLElement>(
     `:scope > [${MARKER_ATTR}="${CSS.escape(key)}"]`,
   );
@@ -69,10 +91,9 @@ export function renderPlaceholder(parent: HTMLElement, key: string): void {
     badge.setAttribute(MARKER_ATTR, key);
     parent.appendChild(badge);
   }
-  if (badge.classList.contains('gcw-badge--empty') && badge.textContent === '–') {
-    return;
-  }
-  badge.className = 'gcw-badge gcw-badge--empty';
+  const className = `gcw-badge gcw-badge--empty gcw-badge--${placement}`;
+  if (badge.className === className && badge.textContent === '–') return;
+  badge.className = className;
   badge.title = 'No forecast available for this date';
   badge.textContent = '–';
   badge.removeAttribute('aria-label');

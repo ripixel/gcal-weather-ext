@@ -62,8 +62,9 @@ export function findDayHeaders(): Array<{ el: HTMLElement; isoDate: string }> {
     let iso = keyed ? isoDateForElement(keyed) : null;
     if (!iso) iso = dateFromGridColumn(header, single);
     if (!iso) continue;
-    const parent = header.querySelector<HTMLElement>('h2') ?? header;
-    out.push({ el: parent, isoDate: iso });
+    // Anchor to the columnheader itself; the badge is corner-positioned so it
+    // sits inside the (short, clip-prone) header box rather than below it.
+    out.push({ el: header, isoDate: iso });
   }
   return out;
 }
@@ -105,7 +106,9 @@ export function findScheduleHeaders(): Array<{ el: HTMLElement; isoDate: string 
     const h2 = group.querySelector<HTMLElement>('h2');
     if (!h2) continue;
     seen.add(iso);
-    out.push({ el: h2, isoDate: iso });
+    // Anchor to the date gridcell (h2's parent) so the badge stacks beneath the
+    // date label instead of crowding the narrow date column inline.
+    out.push({ el: h2.parentElement ?? h2, isoDate: iso });
   }
   return out;
 }

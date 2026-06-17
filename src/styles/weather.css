@@ -5,36 +5,55 @@
  */
 
 .gcw-badge {
-  display: inline-flex;
   align-items: center;
   gap: 2px;
-  margin-left: 6px;
-  padding: 0 4px;
   border-radius: 6px;
   font-size: 11px;
   font-weight: 500;
-  line-height: 1.6;
+  line-height: 1.5;
   white-space: nowrap;
-  vertical-align: middle;
   color: inherit;
-  background: rgba(127, 127, 127, 0.16);
+  background: rgba(127, 127, 127, 0.22);
 }
 
-/* Day-header badge: sits beside the date number. */
-.gcw-badge--day {
-  font-size: 11px;
-}
-
-/* Event badge: rendered inside an event chip or popover; slightly subtler. */
-.gcw-badge--event {
+/* Default: inline within an event chip / popover. */
+.gcw-badge--inline {
   display: inline-flex;
-  margin: 2px 0 0;
-  background: rgba(255, 255, 255, 0.22);
+  margin-top: 2px;
+  padding: 0 4px;
+  vertical-align: middle;
+}
+
+/* Stacked block under a date label (schedule view). */
+.gcw-badge--block {
+  display: flex;
+  width: fit-content;
+  margin: 2px 0 4px;
+  padding: 0 5px;
+}
+
+/*
+ * Corner placement for day/week grid headers, whose date box is short and clips
+ * overflow. Sitting top-right keeps the badge inside the header bounds.
+ */
+.gcw-badge--corner {
+  display: inline-flex;
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  z-index: 2;
+  padding: 0 4px;
+  pointer-events: none;
+}
+
+/* Event badge: rendered inside an event chip; subtler background. */
+.gcw-badge--event {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Out-of-horizon placeholder. */
 .gcw-badge--empty {
-  opacity: 0.45;
+  opacity: 0.4;
   background: transparent;
   font-weight: 400;
 }
