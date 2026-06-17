@@ -26,14 +26,28 @@ export function detectView(): CalendarView {
       return 'week';
   }
 
-  // Bare `/r` (no segment) is the default week view.
-  if (/\/r\/?$/.test(path)) return 'week';
+  // Bare `/r` (opening Calendar lands here) or an unknown segment carries no
+  // view hint, so infer from the DOM — the user's default view may be anything.
+  return detectViewFromDom();
+}
 
-  // DOM fallbacks when the path is unexpected.
+/**
+ * Infers the view from DOM structure, exploiting a useful asymmetry:
+ *  - schedule: events are grouped in `[role="rowgroup"][data-datekey]`,
+ *  - week (and multi-day): several columnheaders, each with a `[data-datekey]`,
+ *  - day: exactly one columnheader (its date lives on grid cells, not the header),
+ *  - month: seven weekday-name columnheaders, none carrying a date.
+ */
+function detectViewFromDom(): CalendarView {
   if (document.querySelector('[role="rowgroup"][data-datekey]')) return 'schedule';
-  const headers = document.querySelectorAll('[role="columnheader"]');
+
+  const headers = [...document.querySelectorAll('[role="columnheader"]')];
+  const datedHeaders = headers.filter((h) =>
+    h.querySelector('[data-datekey]'),
+  );
+  if (datedHeaders.length > 1) return 'week';
   if (headers.length === 1) return 'day';
-  if (headers.length > 1) return 'week';
+  if (headers.length > 1) return 'month';
 
   return 'other';
 }
