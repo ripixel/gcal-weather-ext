@@ -1,0 +1,40 @@
+/*
+ * Injected into calendar.google.com. All classes are prefixed `gcw-` to avoid
+ * colliding with Google's own styles. Kept visually quiet so badges read as a
+ * native part of the calendar in both light and dark themes.
+ */
+
+.gcw-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 6px;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: inherit;
+  background: rgba(127, 127, 127, 0.16);
+}
+
+/* Day-header badge: sits beside the date number. */
+.gcw-badge--day {
+  font-size: 11px;
+}
+
+/* Event badge: rendered inside an event chip or popover; slightly subtler. */
+.gcw-badge--event {
+  display: inline-flex;
+  margin: 2px 0 0;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Out-of-horizon placeholder. */
+.gcw-badge--empty {
+  opacity: 0.45;
+  background: transparent;
+  font-weight: 400;
+}

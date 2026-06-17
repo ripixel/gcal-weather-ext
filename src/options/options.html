@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar Weather settings</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main class="card">
+      <h1>Calendar Weather</h1>
+      <p class="subtitle">
+        Weather in your Google Calendar day, week, and schedule views.
+      </p>
+
+      <section>
+        <h2>Default location</h2>
+        <p class="hint">
+          Used for the per-day forecast. Events with their own location are
+          shown separately.
+        </p>
+        <div class="row">
+          <input
+            id="location-input"
+            type="text"
+            placeholder="e.g. Oakham, UK"
+            autocomplete="off"
+          />
+          <button id="location-search" type="button">Search</button>
+        </div>
+        <p id="location-status" class="status" role="status"></p>
+      </section>
+
+      <section>
+        <h2>Units</h2>
+        <div class="row">
+          <label class="radio">
+            <input type="radio" name="units" value="metric" />
+            <span>Celsius (°C)</span>
+          </label>
+          <label class="radio">
+            <input type="radio" name="units" value="imperial" />
+            <span>Fahrenheit (°F)</span>
+          </label>
+        </div>
+      </section>
+
+      <section>
+        <h2>Show day weather in</h2>
+        <label class="check">
+          <input type="checkbox" id="view-day" />
+          <span>Day view</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="view-week" />
+          <span>Week view</span>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="view-schedule" />
+          <span>Schedule (agenda) view</span>
+        </label>
+      </section>
+
+      <section>
+        <h2>Events</h2>
+        <label class="check">
+          <input type="checkbox" id="event-weather" />
+          <span>Show weather for events away from my default location</span>
+        </label>
+      </section>
+
+      <p id="save-status" class="status saved" role="status"></p>
+    </main>
+    <script type="module" src="./options.ts"></script>
+  </body>
+</html>

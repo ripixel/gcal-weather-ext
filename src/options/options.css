@@ -1,0 +1,144 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --card: #ffffff;
+  --text: #1f2329;
+  --muted: #5f6571;
+  --border: #d7dce3;
+  --accent: #1a73e8;
+  --ok: #137333;
+  --err: #c5221f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f1f1f;
+    --card: #2a2a2a;
+    --text: #e8eaed;
+    --muted: #9aa0a6;
+    --border: #444746;
+    --accent: #8ab4f8;
+    --ok: #81c995;
+    --err: #f28b82;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 32px 16px;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+.subtitle {
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+section {
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.hint {
+  margin: 0 0 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+input[type='text'] {
+  flex: 1;
+  min-width: 200px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.radio,
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.radio {
+  margin-right: 20px;
+}
+
+.status {
+  margin: 10px 0 0;
+  font-size: 13px;
+  min-height: 18px;
+}
+
+.status.err {
+  color: var(--err);
+}
+
+.status.ok {
+  color: var(--ok);
+}
+
+.saved {
+  text-align: right;
+  color: var(--ok);
+}

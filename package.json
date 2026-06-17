@@ -1,0 +1,18 @@
+{
+  "name": "gcal-weather",
+  "version": "0.1.0",
+  "description": "Chrome extension that overlays weather onto Google Calendar (day, week, and schedule views).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.26",
+    "@types/chrome": "^0.0.270",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2"
+  }
+}
